@@ -1,0 +1,47 @@
+//"off" 或者0——不检查这个规则
+//"warn"或者1——开启这个规则，规则生效时，作为提醒告诉用户
+//"error"或者2——开启这个规则，规则生效时，作为错误告诉用户
+//see http://www.cnblogs.com/super86/p/6994813.html
+{
+  "extends": "airbnb",
+  "rules": {
+    "semi": [2, "never"],//语句强制分号结尾
+    "no-console": 1,
+    "comma-dangle": [2, "always-multiline"],
+    "max-len": 0,
+    "react/jsx-first-prop-new-line": 0,
+    "react/jsx-filename-extension": 0,
+    "react/require-default-props":1,
+    "space-before-function-paren": [2, "always"],
+    "no-unused-expressions": [0, {
+      "allowShortCircuit": true,
+      "allowTernary": true
+    }],
+    "arrow-body-style": [0, "never"],
+    "func-names": 0,
+    "prefer-const": 0,
+    "no-extend-native": 0,
+    "no-param-reassign": 0,
+    "no-restricted-syntax": 0,
+    "no-eval": 0,
+    "react/jsx-no-bind": 2,
+    "no-useless-constructor":1,
+    "no-unused-vars": [2, { "ignoreRestSiblings": true }],
+    "no-underscore-dangle": 0,
+    "global-require": 0
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "amd": true
+  }
+}

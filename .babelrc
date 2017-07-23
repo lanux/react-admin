@@ -1,0 +1,23 @@
+{
+  "presets": [
+    "react",
+    "es2015",
+    "stage-2"
+  ],
+  "plugins": [
+    "syntax-dynamic-import",
+    "transform-runtime",
+//    "transform-es2015-classes",
+    "transform-decorators-legacy",
+    "transform-class-properties",
+    "react-hot-loader/babel",
+    ["import", { "libraryName": "antd", "style": true }]
+  ],
+  "env": {
+    "development": {
+      "presets": [
+        "react-hmre"
+      ]
+    }
+  }
+}
