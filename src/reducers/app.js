@@ -1,16 +1,10 @@
 import { createReducer } from '../utils'
 import InitState from '../models/app'
+import { CHANGE_THEME } from '../actions/actionTypes'
 
-export default createReducer(InitState, {
-  GET_SITE_INFO_SUCCESS: (state, data) => {
+const handlers = {
+  CHANGE_THEME: (state, data) => {
     return state.set('siteInfo', data)
   },
-
-  GET_SITE_STATS_SUCCESS: (state, data) => {
-    return state.set('siteStats', data)
-  },
-
-  GET_ALL_NODES_SUCCESS: (state, data) => {
-    return state.set('nodes', data)
-  },
-})
+}
+export default createReducer(InitState, handlers)

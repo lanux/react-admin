@@ -2,15 +2,15 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Icon, Layout, Menu, Switch } from 'antd'
 import '../css/app.less'
+import action from '../actions/app'
 
 const { Header, Footer, Sider, Content } = Layout
 const { SubMenu, MenuItemGroup } = Menu
 
-const App = ({ children, location, app }) => {
+const App = ({ children, location, app, dispatch }) => {
   const handleClickMenu = e => e.key === 'logout' && logout()
   const siderFold = false
   const changeTheme = () => {
-
   }
   return (
     <Layout className="layout">
@@ -27,7 +27,9 @@ const App = ({ children, location, app }) => {
           theme={app.theme}
           defaultSelectedKeys={['4']}
         >
-          <SubMenu key="sub1" title={<span><Icon type="mail" /><span className={siderFold ? '' : ''} >Navigation One</span></span>}>
+          <SubMenu key="sub1"
+            title={<span><Icon type="mail" /><span className={siderFold ? '' : ''}>Navigation One</span></span>}
+          >
             <MenuItemGroup title="Item 1">
               <Menu.Item key="1">Option 1</Menu.Item>
               <Menu.Item key="2">Option 2</Menu.Item>
@@ -90,6 +92,7 @@ App.propTypes = {
   children: PropTypes.element.isRequired,
   location: PropTypes.object,
   app: PropTypes.object,
+  dispatch: PropTypes.function,
 }
 
 export default connect(({ app }) => ({ app }))(App)

@@ -38,31 +38,15 @@ Object.keys(config).forEach(function (key) {
   if(!server[keyParsed.method]){
     console.error('method of ' + key + ' is not valid')
   }
-  if(!(typeof config[key] === 'function' || typeof(config[key]) === 'object' || typeof config[key] === 'string')){
+  if(!(typeof config[key] === 'function' || typeof(config[key]) === 'object')){
     console.error('mock value of ' + key + ' should be function or object or string, but got ' + typeof(config[key]))
   }
-  if (typeof config[key] === 'string') {
-    var path = keyParsed.path;
-    if (/\(.+\)/.test(keyParsed.path)) {
-      path = new RegExp('^' + keyParsed.path + '$');
-    }
-    // app.use(path, createProxy(keyParsed.method, path, config[key]));
-  } else {
-    server[keyParsed.method](keyParsed.path, createMockHandler(keyParsed.method, keyParsed.path, config[key]));
-  }
+  server[keyParsed.method](keyParsed.path, createMockHandler(keyParsed.method, keyParsed.path, config[key]));
 });
 
 // To handle POST, PUT and PATCH you need to use a body-parser
 // You can use the one used by JSON Server
 server.use(jsonServer.bodyParser)
-
-server.use((req, res, next) => {
-  if (req.method === 'POST') {
-    req.body.createdAt = Date.now()
-  }
-  // Continue to JSON Server router
-  next()
-})
 
 // Use default router
 server.use(router)
