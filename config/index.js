@@ -33,26 +33,26 @@ module.exports = {
                 target: 'http://localhost:3000',
                 changeOrigin: true
             },
-            '/img': {
-                target: 'http://localhost:3000',
-                changeOrigin: true
-            },
-            "/proxy":{
-                filter:"/proxy/*",
-                target: 'http://www.example.org', // target host
-                changeOrigin: true,               // needed for virtual hosted sites
-                ws: true,                         // proxy websockets
-                pathRewrite: {
-                    '^/api/old-path' : '/api/new-path',     // rewrite path
-                    '^/api/remove/path' : '/path'           // remove base path
-                },
-                router: {
-                    // when request.headers.host == 'dev.localhost:3000',
-                    // override target 'http://www.example.org' to 'http://localhost:8000'
-                    'dev.localhost:3000' : 'http://localhost:8000'
-                }
-            },
-            "/api" : "http://127.0.0.1:9000"
+            // '/img': {
+            //     target: 'http://localhost:3000',
+            //     changeOrigin: true
+            // },
+            // "/proxy":{
+            //     filter:"/proxy/*",
+            //     target: 'http://www.example.org', // target host
+            //     changeOrigin: true,               // needed for virtual hosted sites
+            //     ws: true,                         // proxy websockets
+            //     pathRewrite: {
+            //         '^/api/old-path' : '/api/new-path',     // rewrite path
+            //         '^/api/remove/path' : '/path'           // remove base path
+            //     },
+            //     router: {
+            //         // when request.headers.host == 'dev.localhost:3000',
+            //         // override target 'http://www.example.org' to 'http://localhost:8000'
+            //         'dev.localhost:3000' : 'http://localhost:8000'
+            //     }
+            // },
+            // "/api" : "http://127.0.0.1:9000"
         },  //代理
         // CSS Sourcemaps off by default because relative paths are "buggy"
         // with this option, according to the CSS-Loader README
