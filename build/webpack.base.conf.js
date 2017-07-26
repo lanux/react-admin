@@ -28,9 +28,16 @@ module.exports = {
     publicPath: profile.assetsPublicPath,//这个配置影响图片的输出路径
   },
   resolve: {
-    extensions: [ '.js', '.json', '.jsx' ],
+    extensions: [ ' ', '.js', '.json', '.jsx' ],
     alias: {
       '@': resolve('src'),
+      // components:path.resolve(__dirname,'..')+'/src/components',
+      // models:path.resolve(__dirname,'..')+'/src/models',
+      // css:path.resolve(__dirname,'..')+'/src/css',
+      // views:path.resolve(__dirname,'..')+'/src/views',
+      // utils:path.resolve(__dirname,'..')+'/src/utils',
+      // _actions:path.resolve('src/actions'),
+      // reducers:path.resolve(__dirname,'..')+'/src/reducers',
     }
   },
   module: {
@@ -55,21 +62,80 @@ module.exports = {
       },
       {
         test: /\.less$/,
+        exclude: /node_modules/,
         use: [
           'style-loader',
-          'css-loader',
-          // Use it after css-loader and style-loader, but before other preprocessor loaders like e.g sass|less|stylus-loader, if you use any.
-          'postcss-loader',
-          'less-loader',
+          'css-loader?importLoaders=1&modules&localIdentName=[hash:base64:5]',
+          {
+            loader: "less-loader",
+            options: {
+              modifyVars: { "@primary-color": "#005ea5" },
+              // 这里利用了 less-loader 的 modifyVars 来进行主题配置， 变量和其他配置方式可以参考 [配置主题]
+              // (https://user-gold-cdn.xitu.io/2017/6/15/e8ba356d7b10cec196d48159e41b6e6e) 文档。
+            },
+          }
+        ]
+      },
+      {
+        test: /\.less$/,
+        include: /node_modules/,
+        use: [
+          'style-loader',
+          {
+            // Use it after css-loader and style-loader, but before other preprocessor loaders like e.g sass|less|stylus-loader, if you use any.
+            loader: require.resolve('postcss-loader'),
+            options: {
+              plugins: () => [
+                autoprefixer({
+                  browsers: [
+                    '>1%',
+                    'last 4 versions',
+                    'Firefox ESR',
+                    'not ie < 9', // React doesn't support IE8 anyway
+                  ],
+                }),
+              ],
+            },
+          },
+          {
+            loader: "less-loader",
+            options: {
+              modifyVars: { "@primary-color": "#005ea5" },
+              // 这里利用了 less-loader 的 modifyVars 来进行主题配置， 变量和其他配置方式可以参考 [配置主题]
+              // (https://user-gold-cdn.xitu.io/2017/6/15/e8ba356d7b10cec196d48159e41b6e6e) 文档。
+            },
+          }
         ]
       },
       {
         test: /\.css/,
+        exclude: /node_modules/,
         use: [
           'style-loader',
-          'css-loader',
-          // Use it after css-loader and style-loader, but before other preprocessor loaders like e.g sass|less|stylus-loader, if you use any.
-          'postcss-loader',
+          'css-loader?importLoaders=1&modules&localIdentName=[hash:base64:5]',
+        ]
+      },
+      {
+        test: /\.css/,
+        include: /node_modules/,
+        use: [
+          'style-loader',
+          {
+            // Use it after css-loader and style-loader, but before other preprocessor loaders like e.g sass|less|stylus-loader, if you use any.
+            loader: require.resolve('postcss-loader'),
+            options: {
+              plugins: () => [
+                autoprefixer({
+                  browsers: [
+                    '>1%',
+                    'last 4 versions',
+                    'Firefox ESR',
+                    'not ie < 9', // React doesn't support IE8 anyway
+                  ],
+                }),
+              ],
+            },
+          },
         ]
       },
       {

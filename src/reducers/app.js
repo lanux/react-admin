@@ -1,10 +1,16 @@
 import { createReducer } from '../utils'
 import InitState from '../models/app'
-import { CHANGE_THEME } from '../actions/actionTypes'
+import { appTypes } from '../actions/actionTypes'
 
 const handlers = {
-  CHANGE_THEME: (state, data) => {
-    return state.set('siteInfo', data)
+  [appTypes.CHANGE_THEME]: (state, data) => {
+    return { ...state, theme: state.theme === 'dark' ? 'light' : 'dark' }
+  },
+  [appTypes.TOGGLE_SIDER_FOLD]: (state, data) => {
+    return { ...state, siderFold: !state.siderFold }
+  },
+  [appTypes.LOGOUT]: (state, data) => {
+    return { ...state, user: {} }
   },
 }
 export default createReducer(InitState, handlers)

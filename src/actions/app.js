@@ -1,7 +1,7 @@
-import types from './actionTypes'
+import { appTypes } from './actionTypes'
 
 export default {
-  changeTheme: () => ({
-    type: types.CHANGE_THEME,
-  }),
+  changeTheme: () => ({ type: appTypes.CHANGE_THEME }),
+  toggleSiderFold: () => ({ type: appTypes.TOGGLE_SIDER_FOLD }),
+  logout: () => ({ type: appTypes.LOGOUT }),
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Router } from 'react-router'
-import App from './views/frame'
+import App from './views/layout/frame'
 
 /*
 Router就是React的一个组件，它并不会被渲染，只是一个创建内部路由规则的配置对象，根据匹配的路由地址展现相应的组件。

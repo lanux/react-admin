@@ -1,7 +1,9 @@
 import { keyMirror } from '../utils'
 
-const TYPES = keyMirror({
+const appTypes = keyMirror({
   CHANGE_THEME: null,
+  TOGGLE_SIDER_FOLD: null,
+  LOGOUT: null,
 })
 
-export default { ...TYPES }
+module.exports = { appTypes }
