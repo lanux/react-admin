@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 import { Icon, Layout, Menu, Switch } from 'antd'
 import classnames from 'classnames'
 import styles from '../../css/app.less'
-import menus from '../../menu'
+import { arrayMenu, treeMenu, useArrayMenu } from '../../menu'
 import { arrayToTree } from '../../utils'
 
 
@@ -15,13 +15,12 @@ const { Header, Footer, Sider, Content } = Layout
 const { SubMenu, MenuItemGroup } = Menu
 
 const App = ({ children, location, app, dispatch, ...others }) => {
+
   const handleClickMenu = e => e.key === 'logout' && logout()
   const { siderFold, theme, siderVisible } = app
   const { changeTheme, toggleSiderFold } = others
 
-  const menuTree = arrayToTree(menus)
-
-  console.log(menuTree)
+  const menuTree = useArrayMenu ? arrayToTree(arrayMenu) : treeMenu
 
   const getMenuItems = (_menuTree, _siderFold) => {
     return _menuTree.map(item => item.children ? (
