@@ -1,4 +1,4 @@
-```
+```javascript
 import React, {Component, PropTypes} from 'react';
 
 import ReactDOM, {render} from 'react-dom';
@@ -47,7 +47,7 @@ store可以通过createStore()方法创建，接受三个参数，经过combineR
 >reducer是一个函数，它接受一个state和一个action，根据action的type返回一个新的state。根据业务逻辑可以分为很多个reducer，然后通过combineReducers将它们合并，state树中有很多对象，每个state对象对应一个reducer，state对象的名字可以在合并时定义。
 
 像这个样子：
-```
+```javascript
 const reducer = combineReducers({
 
      a: doSomethingWithA,
@@ -101,7 +101,7 @@ render(
 
 所以它的完整写法是这样的：connect(mapStateToProps, mapDispatchToProps, mergeProps, options)(component)
 
-```
+```javascript
 // 例子1
 const mapStateToProps = (state) => {
     return {
@@ -169,18 +169,6 @@ ownProps，看名字就知道是组件自己原始的props（即不包含connect
 如果是个函数，它接受两个参数，bindActionCreators会将action和dispatch绑定并返回一个对象，这个对象会和ownProps一起作为props的一部分传入ui组件。
 所以不论mapDispatchToProps是对象还是函数，它最终都会返回一个对象，如果是函数，这个对象的key值是可以自定义的
 第二个可选参数ownProps和mapStateToProps里作用是一样的，不赘述。
-
-function mapDispatchToProps(dispatch) {
-
-     return {
-
-         todoActions: bindActionCreators(todoActionCreators, dispatch),
-
-         counterActions: bindActionCreators(counterActionCreators, dispatch)
-
-     };
-
-}
 mapDispatchToProps返回的对象其属性其实就是一个个actionCreator，因为已经和dispatch绑定，所以当调用actionCreator时会立即发送action，而不用手动dispatch。ownProps的变化也会触发mapDispatchToProps。
 
 **`mergeProps(stateProps, dispatchProps, ownProps)`：**
