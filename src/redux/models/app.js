@@ -8,6 +8,7 @@ const initState = {
   siderFold: false,  // 是否折叠左边栏
   theme: 'light', // 'light','dark'
   user: {},
+  loading: false,
 }
 
 export default initState

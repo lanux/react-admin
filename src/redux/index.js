@@ -4,8 +4,8 @@ import thunkMiddleware from 'redux-thunk'
 import { browserHistory } from 'react-router'
 import { createLogger } from 'redux-logger'
 import { routerMiddleware, routerReducer } from 'react-router-redux'
-import initState from '../models'
-import reducers from '../reducers'
+import initState from './models'
+import reducers from './reducers'
 
 
 /*

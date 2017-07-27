@@ -4,17 +4,27 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Icon, Layout, Menu, Switch } from 'antd'
 import classnames from 'classnames'
+import NProgress from 'nprogress'
 import styles from '../../css/app.less'
 import { arrayMenu, treeMenu, useArrayMenu } from '../../menu'
 import { arrayToTree } from '../../utils'
 
-
-import appAction from '../../actions/app'
+import appAction from '../../redux/actions/app'
 
 const { Header, Footer, Sider, Content } = Layout
 const { SubMenu, MenuItemGroup } = Menu
 
+let lastHref
+
 const App = ({ children, location, app, dispatch, ...others }) => {
+
+  const href = window.location.href
+
+  if (lastHref !== href) {
+    NProgress.start()
+    !app.loading && NProgress.done()
+    lastHref = href
+  }
 
   const handleClickMenu = e => e.key === 'logout' && logout()
   const { siderFold, theme, siderVisible } = app

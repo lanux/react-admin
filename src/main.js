@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
-import store from './store'
+import store from './redux'
 import Routers from './router'
 
 /*
