@@ -2,9 +2,11 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { Icon, Layout, Menu, Switch } from 'antd'
+import { Icon, Layout, Menu, Switch, Popover, Badge } from 'antd'
 import classnames from 'classnames'
 import NProgress from 'nprogress'
+import ReactScrollbar from 'react-scrollbar'
+
 import styles from '../../css/app.less'
 import { arrayMenu, treeMenu, useArrayMenu } from '../../menu'
 import { arrayToTree } from '../../utils'
@@ -17,7 +19,6 @@ const { SubMenu, MenuItemGroup } = Menu
 let lastHref
 
 const App = ({ children, location, app, dispatch, ...others }) => {
-
   const href = window.location.href
 
   if (lastHref !== href) {
@@ -28,7 +29,7 @@ const App = ({ children, location, app, dispatch, ...others }) => {
 
   const handleClickMenu = e => e.key === 'logout' && logout()
   const { siderFold, theme, siderVisible } = app
-  const { changeTheme, toggleSiderFold } = others
+  const { changeTheme, toggleSider } = others
 
   const menuTree = useArrayMenu ? arrayToTree(arrayMenu) : treeMenu
 
@@ -50,8 +51,8 @@ const App = ({ children, location, app, dispatch, ...others }) => {
   const menuContents = getMenuItems(menuTree, siderFold)
 
   return (
-    <Layout className={styles.layout}>
-      <Sider className={classnames(styles.layoutsider, { [styles.dark]: theme === 'dark' })}
+    <Layout className={classnames(styles.layout, { [styles.dark]: theme === 'dark' })}>
+      {siderVisible ? <Sider className={classnames(styles.layoutsider)}
         collapsible
         width={224}
         trigger={null}
@@ -59,29 +60,69 @@ const App = ({ children, location, app, dispatch, ...others }) => {
         collapsedWidth={48}
         collapsed={siderFold}
       >
-        <div className={styles.logo} />
-        <Menu
+        <div className={styles.logo}>
+          <Icon type="github" className={styles.logoicon} />
+          {!siderFold ? <span className={styles.logotitle}>react-admin</span> : ''}
+        </div>
+        {siderFold ? <Menu
           mode={siderFold ? 'vertical' : 'inline'}
           theme={theme}
           inlineIndent={16}
         >
           {menuContents}
-        </Menu>
+        </Menu> :
+        <ReactScrollbar speed={0.8}
+          smoothScrolling
+          horizontal={false}
+          className={classnames(styles.scrollbar, siderFold ? styles.scrollbarfold : '')}
+          contentClassName={styles.scrollbarcontent}
+        >
+          <Menu
+            mode={siderFold ? 'vertical' : 'inline'}
+            theme={theme}
+            inlineIndent={16}
+          >
+            {menuContents}
+          </Menu>
+        </ReactScrollbar>
+        }
         <div className={classnames(styles.switchtheme, siderFold ? styles.smallswitchtheme : '')}>
           {!siderFold ? <span><Icon type="bulb" />切换主题</span> : ''}
           <Switch size={siderFold ? 'small' : 'default'} onChange={changeTheme} checkedChildren="D" unCheckedChildren="L" />
         </div>
       </Sider>
+          : ''}
       <Layout>
         <Header className={styles.header}>
-          <div className={styles.button} onClick={toggleSiderFold} >
-            <Icon type={siderFold ? 'menu-unfold' : 'menu-fold'} />
-          </div>
+          {!siderVisible ?
+            <Popover placement="bottomLeft"
+              // onVisibleChange={switchMenuPopover}
+              // visible={menuPopoverVisible}
+              overlayClassName={classnames(styles.popovermenu, { [styles.dark]: theme === 'dark' })}
+              trigger="click"
+              content={<Menu
+                mode="inline"
+                theme={theme}
+                inlineIndent={16}
+              >
+                {menuContents}
+              </Menu>}
+            >
+              <div className={styles.button}>
+                <Icon type="bars" />
+              </div>
+            </Popover> :
+            <div className={styles.button} onClick={toggleSider}>
+              <Icon type={siderFold ? 'menu-unfold' : 'menu-fold'} />
+            </div>
+          }
           <div className={styles.rightWarpper}>
             <div className={styles.button}>
-              <Icon type="mail" />
+              <Badge dot>
+                <Icon type="mail" />
+              </Badge>
             </div>
-            <Menu mode="horizontal" onClick={handleClickMenu}>
+            <Menu mode="horizontal" onClick={handleClickMenu} theme={theme}>
               <SubMenu style={{ float: 'right' }}
                 title={<span > <Icon type="user" /> username</span>}
               >
@@ -93,7 +134,7 @@ const App = ({ children, location, app, dispatch, ...others }) => {
           </div>
         </Header>
         <Content>{children}</Content>
-        <Footer style={{ textAlign: 'center' }}>
+        <Footer style={{ textAlign: 'center', paddingBottom: 12 }}>
           react-admin ©2017 Created by Lanux
         </Footer>
       </Layout>

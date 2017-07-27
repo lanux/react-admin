@@ -4,10 +4,20 @@ import { appTypes } from '../actions/actionTypes'
 
 const handlers = {
   [appTypes.CHANGE_THEME]: (state, data) => {
-    return { ...state, theme: state.theme === 'dark' ? 'light' : 'dark' }
+    const theme = state.theme === 'dark' ? 'light' : 'dark'
+    localStorage.setItem('app_theme_name', theme)
+    return { ...state, theme }
   },
-  [appTypes.TOGGLE_SIDER_FOLD]: (state, data) => {
-    return { ...state, siderFold: !state.siderFold }
+  [appTypes.TOGGLE_SIDER]: (state, { payload }) => {
+    let siderFold = !state.siderFold
+    let siderVisible = state.siderVisible
+    if (payload && payload.siderFold !== undefined) {
+      siderFold = payload.siderFold
+    }
+    if (payload && payload.siderVisible !== undefined) {
+      siderVisible = payload.siderVisible
+    }
+    return { ...state, siderFold, siderVisible }
   },
   [appTypes.LOGOUT]: (state, data) => {
     return { ...state, user: {} }

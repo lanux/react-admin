@@ -6,7 +6,7 @@ import { Record } from 'immutable'
 const initState = {
   siderVisible: true,
   siderFold: false,  // 是否折叠左边栏
-  theme: 'light', // 'light','dark'
+  theme: localStorage.getItem('app_theme_name') || 'light', // 'light','dark'
   user: {},
   loading: false,
 }

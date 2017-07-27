@@ -2,7 +2,7 @@ import { appTypes } from './actionTypes'
 
 export default {
   changeTheme: () => ({ type: appTypes.CHANGE_THEME }),
-  toggleSiderFold: () => ({ type: appTypes.TOGGLE_SIDER_FOLD }),
+  toggleSider: ({ payload }) => ({ type: appTypes.TOGGLE_SIDER, payload }),
   logout: () => ({ type: appTypes.LOGOUT }),
   switchLoading: ({ payload }) => {
     if (payload && payload.status != null) {

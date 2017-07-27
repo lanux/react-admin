@@ -14,6 +14,32 @@ CSS Modules 允许使用:global(.className)的语法，声明一个全局规则�
   position: relative;
   height: 100vh; // 相对于视口的高度。视口被均分为100单位的vh
 
+  &.dark{
+    //黑色主题
+    background: @menu-dark-bg;
+
+    .layoutsider {
+      background: @menu-dark-bg;
+
+      .logo {
+        background: @menu-dark-bg;
+      }
+
+      .switchtheme {
+        background: @menu-dark-bg;
+      }
+    }
+    .header{
+      background: @menu-dark-bg;
+      .button{
+        color: #999999;
+        &:hover{
+          color: @layout-header-background;
+        }
+      }
+    }
+  }
+
   .layoutsider {
     width: 224px;
     background: #fff;
@@ -22,38 +48,33 @@ CSS Modules 允许使用:global(.className)的语法，声明一个全局规则�
     box-shadow: @shadow-1;
     color: #999;
 
-    &.dark{
-      //黑色主题
-      background: #404040;
-
-      .logo{
-        background: #404040;
-      }
-
-      .switchtheme {
-        background: #494949;
-      }
-    }
-
-    .subMenuTitle{
-
-    }
-
-    .menuItemTitle{
-
+    .scrollbar{
+      height: ~"calc(100vh - 160px)";
+      //height: ~"calc(100vh - 160px)";
+      min-height: 200px;
     }
 
     :global {
 
       .ant-menu-root {
-        height: ~"calc(100vh - 144px)";
+        height: ~"calc(100vh - 160px)";
         border-right: none;
         width: 100%;
+        min-height: 200px;
 
         & > .ant-menu-item {
           .anticon {
-            font-size: 14px;
+            font-size: 16px;
           }
+        }
+
+        &.ant-menu-vertical{
+          height: ~"calc(100vh - 112px)";
+        }
+
+        .ant-menu-item .anticon,
+        .ant-menu-submenu-title .anticon{
+          overflow: inherit;
         }
 
       }
@@ -67,15 +88,14 @@ CSS Modules 允许使用:global(.className)的语法，声明一个全局规则�
 
     .switchtheme {
       width: 100%;
-      position: absolute;
-      bottom: 0;
+      margin-bottom: 0;
       height: 48px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 0 16px 0 24px;
       overflow: hidden;
-      z-index: 1000;
+      //z-index: 1000;
 
       &.smallswitchtheme{
         padding: 0 8px;
@@ -105,8 +125,24 @@ CSS Modules 允许使用:global(.className)的语法，声明一个全局规则�
   }
 
   .logo {
-    height: 48px;
-    margin: 24px 0;
+    //height: 48px;
+    margin: 24px 0 12px;
+    text-align: center;
+    line-height: 48px;
+    cursor: pointer;
+
+    .logoicon{
+      font-size: 28px;
+      display: inherit;
+    }
+
+    .logotitle{
+      vertical-align: text-bottom;
+      font-size: 16px;
+      height: 16px;
+      line-height: 16px;
+      text-transform: uppercase;
+    }
   }
 
   .header {
@@ -121,7 +157,7 @@ CSS Modules 允许使用:global(.className)的语法，声明一个全局规则�
     display: flex;
     justify-content: space-between;
     height: 48px;
-    background-color: @primary-color;
+    background-color: @layout-header-background;
     padding: 0;
 
     .rightWarpper {
@@ -138,30 +174,45 @@ CSS Modules 允许使用:global(.className)的语法，声明一个全局规则�
       cursor: pointer;
 
       &:hover {
-        color: #005ea5;
-        background-color: fade(#005ea5, 15%);
+        color: @primary-color;
+      }
+    }
+
+  }
+
+
+}
+
+// 务必放在最外层，因为popover是顶级元素
+.popovermenu {
+  width: 280px;
+  margin-left: 6px;
+
+
+  &.dark {
+    :global {
+      .ant-popover-content > .ant-popover-arrow:after {
+        border-bottom-color: @menu-dark-bg;
       }
     }
   }
 
-  .popovermenu {
-    width: 280px;
-    margin-left: 6px;
+  :global .ant-popover-inner-content {
+    padding: 0;
 
-    :global .ant-popover-inner-content {
-      padding: 0;
+    .ant-menu-inline .ant-menu-item,
+    .ant-menu-vertical .ant-menu-item {
+      border-right: 0;
+      height: 48px;
+      line-height: 48px;
+    }
 
-      .ant-menu-inline .ant-menu-item,
-      .ant-menu-vertical .ant-menu-item {
-        border-right: 0;
-        height: 48px;
-        line-height: 48px;
-      }
-
-      .ant-menu-inline .ant-menu-item-selected,
-      .ant-menu-inline .ant-menu-selected {
-        border-right: 0;
-      }
+    .ant-menu-inline .ant-menu-item-selected,
+    .ant-menu-inline .ant-menu-selected {
+      border-right: 0;
+    }
+    .ant-menu-item .anticon, .ant-menu-submenu-title .anticon{
+      overflow: inherit;
     }
   }
 }
