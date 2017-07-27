@@ -33,12 +33,10 @@
     "react-redux": "^5.0.5",
     "react-router": "3.0.5",
     "react-router-redux": "^4.0.8",
-    "react-scroll": "^1.5.4",
     "react-scrollbar": "^0.5.1",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-logger": "^3.0.6",
-    "redux-simple-router": "^2.0.4",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
