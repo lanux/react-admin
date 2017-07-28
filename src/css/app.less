@@ -50,14 +50,17 @@ CSS Modules 允许使用:global(.className)的语法，声明一个全局规则�
 
     .scrollbar{
       height: ~"calc(100vh - 160px)";
-      //height: ~"calc(100vh - 160px)";
       min-height: 200px;
+      :global {
+        .scrollbar-container.vertical .scrollbar{
+          background: transparent;
+        }
+      }
     }
 
     :global {
 
       .ant-menu-root {
-        height: ~"calc(100vh - 160px)";
         border-right: none;
         width: 100%;
         min-height: 200px;
@@ -157,6 +160,7 @@ CSS Modules 允许使用:global(.className)的语法，声明一个全局规则�
     display: flex;
     justify-content: space-between;
     height: 48px;
+    box-shadow: @shadow-1;
     background-color: @layout-header-background;
     padding: 0;
 
@@ -185,7 +189,7 @@ CSS Modules 允许使用:global(.className)的语法，声明一个全局规则�
 
 // 务必放在最外层，因为popover是顶级元素
 .popovermenu {
-  width: 280px;
+  width: 224px;
   margin-left: 6px;
 
 
@@ -217,7 +221,31 @@ CSS Modules 允许使用:global(.className)的语法，声明一个全局规则�
   }
 }
 
+.newsPopover{
 
+  p{
+    line-height: 24px;
+    height: 24px;
+  }
+}
+
+.layoutcontentscroll{
+  height: ~"calc(100vh - 48px)";
+  //height: ~"calc(100vh - 160px)";
+  min-height: 200px;
+}
+.layoutbread{
+  height: 48px;
+  line-height: 48px;
+  padding: 0 24px;
+  margin-bottom: -12px;
+}
+
+.layoutcontent{
+  background: @layout-header-background;
+  margin: 16px 16px 0 16px;
+  padding: 16px;
+}
 
 :global {
   #nprogress {

@@ -1,12 +1,11 @@
 import appInitState from './app'
-// import replyInitState from './modules/reply/replyInitState'
+import sysUser from './sysUser'
 // import topicInitState from './modules/topic/topicInitState'
 // import userInitState from './modules/user/userInitState'
 
-
 export default {
   app: appInitState,
-    // reply: new replyInitState,
-    // topic: new topicInitState,
-    // user: new userInitState
+  sysUser,
+  // topic: new topicInitState,
+  // user: new userInitState
 }

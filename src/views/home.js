@@ -1,5 +1,4 @@
 import React from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 // import { QueueAnim, Table } from 'antd'
 // import { Link } from 'react-router'
@@ -19,8 +18,7 @@ import { connect } from 'react-redux'
 
  */
 @connect(
-    state => ({ ...state }),
-    dispatch => bindActionCreators(()=>{}, dispatch)
+    state => ({ ...state })
 )
 export default class HomeView extends React.Component {
   constructor () {
@@ -33,7 +31,71 @@ export default class HomeView extends React.Component {
   render () {
     return (
       <div className="content">
-          home page
+          home page<br />
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
+        <p>home</p>
       </div>
     )
   }

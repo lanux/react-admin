@@ -1,26 +1,77 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { Icon, Layout, Menu, Switch, Popover, Badge } from 'antd'
+import { Icon, Layout, Menu, Switch, Popover, Badge, Breadcrumb } from 'antd'
 import classnames from 'classnames'
 import NProgress from 'nprogress'
 import ReactScrollbar from 'react-scrollbar'
+import pathToRegexp from 'path-to-regexp'
+
 
 import styles from '../../css/app.less'
 import { arrayMenu, treeMenu, useArrayMenu } from '../../menu'
-import { arrayToTree } from '../../utils'
+import { arrayToTree, queryArray } from '../../utils'
 
 import appAction from '../../redux/actions/app'
 
 const { Header, Footer, Sider, Content } = Layout
-const { SubMenu, MenuItemGroup } = Menu
+const { SubMenu } = Menu
 
 let lastHref
+const menuTree = useArrayMenu ? arrayToTree(arrayMenu) : treeMenu
+const getMenuItems = (_menuTree, _siderFold) => {
+  return _menuTree.map((item) => {
+    if (item.children) {
+      return (<SubMenu key={item.id} title={<span>{item.icon && <Icon type={item.icon} />}<span className={styles.subMenuTitle}>{item.name}</span></span>}>
+        {getMenuItems(item.children, _siderFold)}
+      </SubMenu>
+      )
+    }
+    return (<Menu.Item key={item.id}>
+      <Link to={item.router}>
+        {item.icon && <Icon type={item.icon} />}
+        <span className={styles.menuItemTitle}>{item.name}</span>
+      </Link>
+    </Menu.Item>)
+  })
+}
 
-const App = ({ children, location, app, dispatch, ...others }) => {
+const getPathArray = (array, current, pid, id) => {
+  let defaultSelectedKeys = [String(current[id])]
+  const currentMenuArray = [current]
+  const getPath = (item) => {
+    if (item && item[pid]) {
+      defaultSelectedKeys.unshift(String(item[pid])) // 数组前端插入
+      let parentItem = queryArray(array, item[pid], id)
+      currentMenuArray.unshift(parentItem)
+      getPath(parentItem)
+    }
+  }
+  getPath(current)
+  return { defaultSelectedKeys, currentMenuArray }
+}
+
+function getCurrentMenuItem (location) {
+  let currentMenu
+  for (let item of arrayMenu) {
+    if (item.router && pathToRegexp(item.router).exec(location)) {
+      currentMenu = item
+      break
+    }
+  }
+  if (currentMenu) {
+    return getPathArray(arrayMenu, currentMenu, 'pid', 'id')
+  }
+  return {}
+}
+
+
+const App = ({ children, location, app, ...others }) => {
+  const { siderFold, theme, siderVisible, news } = app
+  const { changeTheme, toggleSider } = others
+
+  // 路由切换显示进度条
   const href = window.location.href
-
   if (lastHref !== href) {
     NProgress.start()
     !app.loading && NProgress.done()
@@ -28,62 +79,54 @@ const App = ({ children, location, app, dispatch, ...others }) => {
   }
 
   const handleClickMenu = e => e.key === 'logout' && logout()
-  const { siderFold, theme, siderVisible } = app
-  const { changeTheme, toggleSider } = others
 
-  const menuTree = useArrayMenu ? arrayToTree(arrayMenu) : treeMenu
-
-  const getMenuItems = (_menuTree, _siderFold) => {
-    return _menuTree.map(item => item.children ? (
-      <SubMenu key={item.id} title={<span>{item.icon && <Icon type={item.icon} />}<span className={styles.subMenuTitle}>{item.name}</span></span>}>
-        {getMenuItems(item.children, _siderFold)}
-      </SubMenu>
-    ) : (
-      <Menu.Item key={item.id}>
-        <Link to={item.router}>
-          {item.icon && <Icon type={item.icon} />}
-          <span className={styles.menuItemTitle}>{item.name}</span>
-        </Link>
-      </Menu.Item>
-    ))
-  }
 
   const menuContents = getMenuItems(menuTree, siderFold)
 
+  // 寻找选中路由
+
+  const { defaultSelectedKeys, currentMenuArray } = getCurrentMenuItem(location.pathname)
+
+  // 寻找选中路由
+  const menuProps = {
+    onClick: ({ keyPath }) => {
+      keyPath.map(id => arrayMenu.find(item => `${item.id}` === id))
+    },
+    theme,
+    inlineIndent: 16,
+    mode: 'inline',
+    defaultSelectedKeys,
+    defaultOpenKeys: !siderFold && defaultSelectedKeys ? defaultSelectedKeys : [],
+  }
+
+  // 递归查找父级
+  const breads = currentMenuArray ? currentMenuArray.map((item, key) => {
+    const content = (
+      <span>{item.icon
+        ? <Icon type={item.icon} style={{ marginRight: 4 }} />
+        : ''}{item.name}</span>
+    )
+    return (
+      <Breadcrumb.Item key={item.id}>
+        {((currentMenuArray.length - 1) !== key && item.router)
+          ? <Link to={item.router}>
+            {content}
+          </Link>
+          : content}
+      </Breadcrumb.Item>
+    )
+  }) : ''
+
   return (
     <Layout className={classnames(styles.layout, { [styles.dark]: theme === 'dark' })}>
-      {siderVisible ? <Sider className={classnames(styles.layoutsider)}
-        collapsible
-        width={224}
-        trigger={null}
-        breakpoint="md"
-        collapsedWidth={48}
-        collapsed={siderFold}
-      >
+      {siderVisible ? <Sider className={classnames(styles.layoutsider)} collapsible width={224} trigger={null} collapsedWidth={48} collapsed={siderFold}>
         <div className={styles.logo}>
           <Icon type="github" className={styles.logoicon} />
           {!siderFold ? <span className={styles.logotitle}>react-admin</span> : ''}
         </div>
-        {siderFold ? <Menu
-          mode={siderFold ? 'vertical' : 'inline'}
-          theme={theme}
-          inlineIndent={16}
-        >
-          {menuContents}
-        </Menu> :
-        <ReactScrollbar speed={0.8}
-          smoothScrolling
-          horizontal={false}
-          className={classnames(styles.scrollbar, siderFold ? styles.scrollbarfold : '')}
-          contentClassName={styles.scrollbarcontent}
-        >
-          <Menu
-            mode={siderFold ? 'vertical' : 'inline'}
-            theme={theme}
-            inlineIndent={16}
-          >
-            {menuContents}
-          </Menu>
+        {siderFold ? <Menu {...menuProps} mode={'vertical'}>{menuContents}</Menu> :
+        <ReactScrollbar speed={0.8} smoothScrolling horizontal={false} className={styles.scrollbar} contentClassName={styles.scrollbarcontent}>
+          <Menu {...menuProps}>{menuContents}</Menu>
         </ReactScrollbar>
         }
         <div className={classnames(styles.switchtheme, siderFold ? styles.smallswitchtheme : '')}>
@@ -94,49 +137,63 @@ const App = ({ children, location, app, dispatch, ...others }) => {
           : ''}
       <Layout>
         <Header className={styles.header}>
-          {!siderVisible ?
-            <Popover placement="bottomLeft"
-              // onVisibleChange={switchMenuPopover}
-              // visible={menuPopoverVisible}
-              overlayClassName={classnames(styles.popovermenu, { [styles.dark]: theme === 'dark' })}
-              trigger="click"
-              content={<Menu
-                mode="inline"
-                theme={theme}
-                inlineIndent={16}
+          {!siderVisible
+            ?
+              <Popover placement="bottomLeft"
+                overlayClassName={classnames(styles.popovermenu, { [styles.dark]: theme === 'dark' })}
+                trigger="click"
+                content={<Menu {...menuProps}>{menuContents}</Menu>}
               >
-                {menuContents}
-              </Menu>}
-            >
+                <div className={styles.button}>
+                  <Icon type="bars" />
+                </div>
+              </Popover>
+            :
               <div className={styles.button}>
-                <Icon type="bars" />
+                <Icon type={siderFold ? 'menu-unfold' : 'menu-fold'} onClick={toggleSider} />
               </div>
-            </Popover> :
-            <div className={styles.button} onClick={toggleSider}>
-              <Icon type={siderFold ? 'menu-unfold' : 'menu-fold'} />
-            </div>
           }
           <div className={styles.rightWarpper}>
-            <div className={styles.button}>
-              <Badge dot>
-                <Icon type="mail" />
-              </Badge>
-            </div>
-            <Menu mode="horizontal" onClick={handleClickMenu} theme={theme}>
+            <Popover placement="bottomRight" content={<div className={styles.newsPopover}>{news.map(item => <p key={item.id}>{item.content}</p>)}</div>} trigger="click">
+              <div className={styles.button}>
+                <Badge dot >
+                  <Icon type="mail" />
+                </Badge>
+              </div>
+            </Popover>
+            <Menu mode="horizontal" onClick={handleClickMenu} theme={theme} style={{ zIndex: 'auto' }}>
               <SubMenu style={{ float: 'right' }}
                 title={<span > <Icon type="user" /> username</span>}
               >
+                <Menu.Item key="resetPwd">
+                  修改密码
+                </Menu.Item>
+                <Menu.Item key="setting">
+                  设置
+                </Menu.Item>
                 <Menu.Item key="logout">
-                  Sign out
+                  退出
                 </Menu.Item>
               </SubMenu>
             </Menu>
           </div>
         </Header>
-        <Content>{children}</Content>
-        <Footer style={{ textAlign: 'center', paddingBottom: 12 }}>
-          react-admin ©2017 Created by Lanux
-        </Footer>
+        <ReactScrollbar speed={0.8}
+          smoothScrolling
+          horizontal={false}
+          className={styles.layoutcontentscroll}
+          contentClassName={styles.scrollbarcontent}
+        >
+          <div className={styles.layoutbread}>
+            <Breadcrumb>
+              {breads}
+            </Breadcrumb>
+          </div>
+          <Content className={styles.layoutcontent}>{children}</Content>
+          <Footer style={{ textAlign: 'center', paddingBottom: 12 }}>
+            react-admin ©2017 Created by Lanux
+          </Footer>
+        </ReactScrollbar>
       </Layout>
     </Layout>
   )
@@ -146,7 +203,6 @@ App.propTypes = {
   children: PropTypes.element.isRequired,
   location: PropTypes.object,
   app: PropTypes.object,
-  dispatch: PropTypes.function,
 }
 
 export default connect(({ app }) => ({ app }), appAction)(App)

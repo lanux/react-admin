@@ -2,9 +2,9 @@
 export const useArrayMenu = true
 
 export const arrayMenu = [
-  { id: 1, icon: 'laptop', name: '仪表盘', router: '/dashboard' },
-  { id: 101, name: '行为数据', icon: 'line-chart' },
-  { id: 102, pid: 101, name: '消息推送', icon: 'mail', router: '/bi/msgPush' },
+  { id: 1, icon: 'laptop', name: '仪表盘', router: '/home' },
+  { id: 101, name: '系统管理', icon: 'line-chart', router: '/sys' },
+  { id: 102, pid: 101, name: '用户管理', icon: 'mail', router: '/sys/user' },
   { id: 103, pid: 101, name: '活跃用户', icon: 'usergroup-add', router: '/bi/active' },
   { id: 104, pid: 101, name: '广告转化', icon: 'area-chart' },
   { id: 1041, pid: 104, name: '数据模型配置', icon: 'api', router: '/bi/adTemplate' },

@@ -43,3 +43,10 @@ export const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children'
   })
   return result
 }
+
+export const queryArray = (array, key, keyAlias = 'key') => {
+  if (!!array && array instanceof Array) {
+    return array.find(item => item[keyAlias] === key)
+  }
+  return null
+}

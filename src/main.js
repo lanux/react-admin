@@ -3,6 +3,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
+import 'babel-polyfill'
 import store from './redux'
 import Routers from './router'
 import appActions from './redux/actions/app'
@@ -15,11 +16,11 @@ const history = syncHistoryWithStore(browserHistory, store)
 
 const resize = ({ dispatch }) => {
   const siderFold = document.body.clientWidth < 992
-  const siderVisible = document.body.clientWidth > 200 // 768
+  const siderVisible = document.body.clientWidth > 768
   dispatch(appActions.toggleSider({ payload: { siderFold, siderVisible } }))
 }
 
-resize(store)
+document.body.clientWidth < 769 && resize(store)
 
 let tid
 window.onresize = () => {

@@ -9,4 +9,9 @@ const appTypes = keyMirror({
   SWITCH_LOADING_STATUS: null,
 })
 
-module.exports = { appTypes }
+const sysUserType = keyMirror({
+  LOAD: null,
+  LOAD_FINISHED: null,
+})
+
+module.exports = { appTypes, sysUserType }

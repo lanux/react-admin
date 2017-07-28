@@ -17,6 +17,8 @@ const handlers = {
     if (payload && payload.siderVisible !== undefined) {
       siderVisible = payload.siderVisible
     }
+    localStorage.setItem('app_sider_visible', siderVisible ? '1' : '0')
+    localStorage.setItem('app_sider_fold', siderFold ? '1' : '0')
     return { ...state, siderFold, siderVisible }
   },
   [appTypes.LOGOUT]: (state, data) => {

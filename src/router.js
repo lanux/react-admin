@@ -27,12 +27,30 @@ const Routers = ({ history }) => {
         }, 'home')
       },
       childRoutes: [{
+        path: 'home',
+        getComponent (location, cb) {
+          require.ensure([], (require) => {
+            cb(null, require('./views/home'))
+          }, 'login')
+        },
+      }, {
         path: 'login',
         getComponent (location, cb) {
           require.ensure([], (require) => {
             cb(null, require('./views/login'))
           }, 'login')
         },
+      },
+      {
+        path: 'sys',
+        childRoutes: [{
+          path: 'user',
+          getComponent (location, cb) {
+            require.ensure([], (require) => {
+              cb(null, require('./views/sys/users'))
+            }, 'sys_user')
+          },
+        }],
       },
       {
         path: '*',
