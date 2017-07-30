@@ -7,7 +7,7 @@ module.exports = {
         index: path.resolve(__dirname, '../dist/index.html'),
         assetsRoot: path.resolve(__dirname, '../dist'),
         assetsSubDirectory: 'public',
-        assetsPublicPath: '/',
+        assetsPublicPath: '/react-admin/', // 如果需要给项目指定项目名称需要配置,否则配置成 “/”
         productionSourceMap: true,
         // Gzip off by default as many popular static hosts such as
         // Surge or Netlify already gzip all static assets for you.
