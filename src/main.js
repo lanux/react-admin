@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import 'babel-polyfill'
-import redux from './redux'
+import { store, history } from './redux'
 import Routers from './router'
 import appActions from './redux/actions/app'
 
@@ -12,8 +12,6 @@ const resize = ({ dispatch }) => {
   const siderVisible = document.body.clientWidth > 768
   dispatch(appActions.toggleSider({ payload: { siderFold, siderVisible } }))
 }
-
-const { store, history } = redux
 
 document.body.clientWidth < 769 && resize(store)
 
