@@ -66,7 +66,7 @@ const store = createStoreWithMiddleware(rootReducer, initState)
  这样确保了sote是最新状态，无论它是来自导航事件或者时光机的action（例如replay），增强历史记录的监听器将保持同步。
  */
 const history = syncHistoryWithStore(browserHistory, store)
-history.listen((location) => { alert(location.pathname) })
+
 const unListeners = []
 subscriptionHolder.forEach(({ subscriptions, actions }) => {
   for (const method in subscriptions) {
