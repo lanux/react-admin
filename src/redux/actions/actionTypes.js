@@ -7,6 +7,8 @@ const appTypes = keyMirror({
   SHOW_LOADING: null,
   HIDE_LOADING: null,
   SWITCH_LOADING_STATUS: null,
+  LOAD_FINISHED: null,
+
 })
 
 const sysUserType = keyMirror({
