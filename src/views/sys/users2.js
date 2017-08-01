@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Button, Col, message, Form, Row, Input, Table } from 'antd'
-import { actions as userActions } from '../../redux/domain/sysUser'
+import * as userActions from '../../redux/actions/sys/user'
 
 const SysUserView = ({
                         sysUser,
@@ -12,11 +12,11 @@ const SysUserView = ({
                         },
                         ...others
                       }) => {
-  const { filterProps, pagination, loading, list: dataSource } = sysUser
+  const { filterProps, pagination, loading, list: dataSource, initLoaded } = sysUser
 
   const { queryList } = others
 
-  // !initLoaded && queryList({ payload: {} })
+  !initLoaded && queryList({ payload: {} })
 
   const handleSubmit = () => {
     let fields = getFieldsValue()
@@ -41,7 +41,7 @@ const SysUserView = ({
       dataIndex: 'avatar',
       key: 'avatar',
       width: 64,
-      render: text => <img alt={'avatar'} width={24} src={text} />,
+      render: (text) => <img alt={'avatar'} width={24} src={text} />,
     }, {
       title: 'Name',
       dataIndex: 'name',
@@ -58,9 +58,9 @@ const SysUserView = ({
       title: 'Gender',
       dataIndex: 'isMale',
       key: 'isMale',
-      render: text => (<span>{text
+      render: (text) => <span>{text
         ? 'Male'
-        : 'Female'}</span>),
+        : 'Female'}</span>,
     }, {
       title: 'Phone',
       dataIndex: 'phone',
@@ -77,7 +77,7 @@ const SysUserView = ({
       title: 'CreateTime',
       dataIndex: 'createTime',
       key: 'createTime',
-    }]
+    },]
 
   const listProps = {
     pagination: { ...pagination, showSizeChanger: true, showQuickJumper: true },

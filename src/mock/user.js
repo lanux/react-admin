@@ -19,6 +19,16 @@ let usersListData = Mock.mock({
   ],
 })
 
+const shuffle = function (input) {
+  for (let i = input.length - 1; i >= 0; i--) {
+    const randomIndex = Math.floor(Math.random() * (i + 1))
+    const itemAtIndex = input[randomIndex]
+    input[randomIndex] = input[i]
+    input[i] = itemAtIndex
+  }
+  return input
+}
+
 
 let database = usersListData.data
 
@@ -83,7 +93,7 @@ module.exports = {
     pageSize = pageSize || 10
     page = page || 1
 
-    let newData = database
+    let newData = shuffle(database)
 
     res.status(200).json({
       data: newData.slice((page - 1) * pageSize, page * pageSize),
