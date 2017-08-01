@@ -33,12 +33,13 @@
     "react-dom": "^15.6.1",
     "react-helmet": "^5.1.3",
     "react-redux": "^5.0.5",
-    "react-router": "2.8.1", // 不能升级否则subscription F5页面不行
+    "react-router": "2.8.1",
     "react-router-redux": "^4.0.8",
     "react-scrollbar": "^0.5.1",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-logger": "^3.0.6",
+    "redux-observable": "^0.14.1",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
