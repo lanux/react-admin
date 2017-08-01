@@ -7,8 +7,16 @@ import { routerMiddleware, routerReducer, syncHistoryWithStore } from 'react-rou
 import initState from './models'
 import reducersHolder from './reducers'
 import domains from './domain'
-import { createReducer } from '../utils/index'
 import { message } from 'antd'
+// 引入createEpicMiddleware
+import { createEpicMiddleware } from 'redux-observable'
+
+// 引入合并后的epic函数
+import rootEpic from './epics'
+import { createReducer } from '../utils/index'
+
+// createEpicMiddleware会将epic函数转为redux中间件
+const epicMiddleware = createEpicMiddleware(rootEpic)
 
 
 /*
@@ -37,6 +45,7 @@ const loggerMiddleware = createLogger({
  *
  */
 const createStoreWithMiddleware = applyMiddleware(
+  epicMiddleware,
   // Action 是由store.dispatch方法发送的。而store.dispatch方法正常情况下，参数只能是对象，不能是函数。
   // 使用redux-thunk中间件，改造store.dispatch，使得后者可以接受函数作为参数。
   thunkMiddleware,
