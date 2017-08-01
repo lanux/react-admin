@@ -1,0 +1,81 @@
+@import "../../css/themes/default";
+.login {
+    margin: 20px auto;
+    width: 50vw;
+    height: 320px;
+    min-width: 320px;
+    max-width: 640px;
+    padding: 0px;
+    box-shadow: 0 0 100px rgba(0, 0, 0, .08);
+}
+
+.register {
+    height: 320px;
+    background: @primary-7;
+    margin: 0;
+    padding: 0;
+    color: @body-background;
+    & > div{
+        margin:36px;
+        text-align: center;
+        h2{
+            color: inherit;
+            margin: 20px;
+            font-weight: 700;
+        }
+        p{
+            margin-top: 48px;
+            line-height: 25px;
+        }
+    }
+}
+
+.form {
+    min-width: 320px;
+    height: 100%;
+    padding: 36px;
+
+    .logintitle{
+        margin: 0 0 20px;
+        font-weight: 700;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    p {
+        color: rgb(204, 204, 204);
+        text-align: center;
+        margin-top: 16px;
+
+        span {
+            &:first-child {
+                 margin-right: 16px;
+             }
+        }
+    }
+}
+
+.logo {
+    text-align: center;
+    cursor: pointer;
+    padding-top: 32px;
+
+    .logoicon{
+        font-size: 5rem;
+    }
+
+    h2 {
+        vertical-align: text-bottom;
+        font-size: 24px;
+        text-transform: uppercase;
+        margin-top: 1rem;
+        display: block;
+    }
+}
+
+//.ant-spin-container,
+//.ant-spin-nested-loading {
+//    height: 100%;
+//}

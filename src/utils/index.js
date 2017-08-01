@@ -50,3 +50,4 @@ export const queryArray = (array, key, keyAlias = 'key') => {
   }
   return null
 }
+

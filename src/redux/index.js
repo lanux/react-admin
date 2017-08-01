@@ -58,9 +58,9 @@ const subscriptionHolder = []
 for (const key in domains) {
   if (Object.prototype.hasOwnProperty.call(domains, key)) {
     const { state, reducers, actions, subscriptions } = domains[key]
-    reducersHolder[key] = createReducer(state || {}, reducers)
+    reducers && (reducersHolder[key] = createReducer(state || {}, reducers))
     initState[key] = state || {}
-    subscriptionHolder.push({ subscriptions, actions })
+    subscriptions && subscriptionHolder.push({ subscriptions, actions })
   }
 }
 

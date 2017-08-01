@@ -3,7 +3,7 @@ import InitState from '../models/app'
 import { appTypes } from '../actions/actionTypes'
 
 const handlers = {
-  [appTypes.CHANGE_THEME]: (state, data) => {
+  [appTypes.CHANGE_THEME]: (state) => {
     const theme = state.theme === 'dark' ? 'light' : 'dark'
     localStorage.setItem('app_theme_name', theme)
     return { ...state, theme }
@@ -21,17 +21,20 @@ const handlers = {
     localStorage.setItem('app_sider_fold', siderFold ? '1' : '0')
     return { ...state, siderFold, siderVisible }
   },
-  [appTypes.LOGOUT]: (state, data) => {
+  [appTypes.LOGOUT]: (state) => {
     return { ...state, user: {} }
   },
-  [appTypes.SHOW_LOADING]: (state, data) => {
+  [appTypes.SHOW_LOADING]: (state) => {
     return { ...state, loading: true }
   },
-  [appTypes.HIDE_LOADING]: (state, data) => {
+  [appTypes.HIDE_LOADING]: (state) => {
     return { ...state, loading: false }
   },
-  [appTypes.SWITCH_LOADING_STATUS]: (state, data) => {
+  [appTypes.SWITCH_LOADING_STATUS]: (state) => {
     return { ...state, loading: !state.loading }
+  },
+  [appTypes.LOAD_FINISHED]: (state, { payload }) => {
+    return { ...state, ...payload }
   },
 }
 export default createReducer(InitState, handlers)

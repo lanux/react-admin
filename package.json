@@ -21,10 +21,12 @@
   "dependencies": {
     "animate.css": "3.5.2",
     "antd": "^2.12.2",
-    "axios": "^0.15.3",
     "babel-polyfill": "^6.23.0",
     "classnames": "^2.2.5",
+    "echarts": "^3.6.2",
+    "echarts-for-react": "^1.4.4",
     "es6-promise": "^4.1.1",
+    "i": "^0.3.5",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
     "nprogress": "^0.2.0",

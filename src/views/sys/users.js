@@ -28,13 +28,6 @@ const SysUserView = ({
     queryList({ payload: fields })
   }
 
-  const handleExport = () => {
-    filterProps.expType = 'csv'
-    const url = ''
-    document.location.href = url
-    message.loading('正在下载...', 2)
-  }
-
   const columns = [
     {
       title: 'Avatar',
@@ -106,18 +99,17 @@ const SysUserView = ({
     <div className="content-inner">
       <Row gutter={24}>
         <Col {...ColProps}>
-          {getFieldDecorator('liveId', { initialValue: '' })(
-            <Input size="large" style={{ width: '100%' }} placeholder="请输入直播ID" />
+          {getFieldDecorator('username', { initialValue: '' })(
+            <Input size="large" style={{ width: '100%' }} placeholder="请输入用户名" />
           )}
         </Col>
         <Col {...ColProps} xl={{ span: 6 }} sm={{ span: 12 }}>
-          {getFieldDecorator('userId', { })(
-            <Input size="large" style={{ width: '100%' }} placeholder="请输入用户ID" />
+          {getFieldDecorator('mobile', { })(
+            <Input size="large" style={{ width: '100%' }} placeholder="请输入用户手机" />
           )}
         </Col>
         <Col {...ColProps}>
           <Button type="primary" icon="search" size="large" loading={loading} className="margin-right" onClick={handleSubmit}>查询</Button>
-          <Button type="info" icon="download" size="large" className="margin-right" onClick={handleExport}>导出</Button>
         </Col>
       </Row>
       <Row gutter={24}>
