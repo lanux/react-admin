@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import NProgress from 'nprogress'
 import ReactScrollbar from 'react-scrollbar'
 import pathToRegexp from 'path-to-regexp'
+import config from '../../utils/config'
 
 
 import styles from '../../css/app.less'
@@ -67,9 +68,13 @@ function getCurrentMenuItem (location) {
 
 
 const App = ({ children, location, app, ...others }) => {
-  const { siderFold, theme, siderVisible, news } = app
-  const { changeTheme, toggleSider } = others
+  const { siderFold, theme, siderVisible, news, user } = app
+  const { changeTheme, toggleSider, loadUser, logout } = others
 
+  if (config.top_target_pages && config.top_target_pages.indexOf(location.pathname) > -1) {
+    return <div>{children}</div>
+  }
+  !user.username && loadUser()
   // 路由切换显示进度条
   const href = window.location.href
   if (lastHref !== href) {
