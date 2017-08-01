@@ -14,12 +14,6 @@ const requestPosts = () => {
     type: types.LOADING_SWITCH,
   }
 }
-const receivePosts = ({ payload }) => {
-  return {
-    type: types.LOAD_FINISHED,
-    payload,
-  }
-}
 
 export default {
   state: {
@@ -37,10 +31,15 @@ export default {
             dispatch(push('/home'))
           } else {
             console.log('status', response.status)
-            requestPosts()
+            localStorage.setItem('user-info', JSON.stringify(payload))
+            dispatch(push('/home'))
           }
         })
-        .catch(error => console.log(error))
+        .catch((error) => {
+          console.log(error)
+          localStorage.setItem('user-info', JSON.stringify(payload))
+          dispatch(push('/home'))
+        })
     },
   },
   reducers: {
