@@ -5,7 +5,7 @@ export const arrayMenu = [
   { id: 1, icon: 'laptop', name: '仪表盘', router: '/home' },
   { id: 101, name: '系统管理', icon: 'line-chart', router: '/sys' },
   { id: 102, pid: 101, name: '用户管理', icon: 'mail', router: '/sys/user' },
-  { id: 103, pid: 101, name: '测试菜单', icon: 'usergroup-add', router: '/test/test' },
+  { id: 103, pid: 101, name: '角色管理', icon: 'usergroup-add', router: '/sys/role' },
   { id: 104, pid: 101, name: '测试菜单', icon: 'area-chart' },
   { id: 1041, pid: 104, name: '测试菜单', icon: 'api', router: '/test/test' },
   { id: 1042, pid: 104, name: '测试菜单', icon: 'bar-chart', router: '/test/test' },

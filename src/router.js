@@ -42,6 +42,14 @@ const Routers = ({ history }) => {
               cb(null, require('./views/sys/users'))
             }, 'sys_user')
           },
+        },
+        {
+          path: 'role',
+          getComponent (location, cb) {
+            require.ensure([], (require) => {
+              cb(null, require('./views/sys/roles'))
+            }, 'sys_role')
+          },
         }],
       },
       {
