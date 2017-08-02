@@ -19,7 +19,6 @@ npm run mock
 
 
 Ant Design React官方已经提供脚手架，同时也推荐了社区提供的脚手架和范例：<br />
-*
 [react-redux-antd-starter](https://github.com/BetaRabbit/react-redux-antd-starter)<br />
 [reactSPA](https://github.com/JasonBai007/reactSPA)<br />
 [react-redux-antd by Justin-lu](https://github.com/Justin-lu/react-redux-antd)<br />
@@ -28,7 +27,6 @@ Ant Design React官方已经提供脚手架，同时也推荐了社区提供的�
 [react-antd-redux-router-starter](https://github.com/yuzhouisme/react-antd-redux-router-starter)<br />
 [antd-admin](https://github.com/zuiidea/antd-admin)<br />
 [更多](https://github.com/ant-design/ant-design/issues/129)<br />
-*
 **为什么要重复造轮？**
 >`不想用roadhog, dva`<br />
 >roadhog是对webpack,express...的一个封装 <br />
