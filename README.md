@@ -35,7 +35,10 @@ Ant Design React官方已经提供脚手架，同时也推荐了社区提供的�
 >dva是对saga，react-router，redux...的封装 <br />
 >**我不提倡不封装，但也不提倡过度封装。**
 
+## 截图
 
+![image](https://raw.githubusercontent.com/lanux/react-admin/master/public/img/login.png)
+![image](https://raw.githubusercontent.com/lanux/react-admin/master/public/img/home.png)
 
 
 ## 参考资料
