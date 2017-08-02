@@ -1,17 +1,22 @@
 import 'es6-promise'
 import fetch from 'isomorphic-fetch'
-import { sysUserType } from '../actions/actionTypes'
+import { keyMirror } from '../../utils/index'
+
+const types = keyMirror({
+  LOAD: null,
+  LOAD_FINISHED: null,
+})
 
 // 开始获取数据
 const requestPosts = (path) => {
   return {
-    type: sysUserType.LOAD,
+    type: types.LOAD,
     path,
   }
 }
 const receivePosts = ({ payload }) => {
   return {
-    type: sysUserType.LOAD_FINISHED,
+    type: types.LOAD_FINISHED,
     payload,
   }
 }
@@ -54,7 +59,7 @@ export default {
     },
   },
   reducers: {
-    [sysUserType.LOAD_FINISHED]: (state, { payload }) => {
+    [types.LOAD_FINISHED]: (state, { payload }) => {
       return { ...state, ...payload, initLoaded: true }
     },
   },

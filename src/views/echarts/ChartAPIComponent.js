@@ -1,10 +1,20 @@
 import React from 'react'
 import ReactEcharts from 'echarts-for-react'
 
-const ChartAPIComponent = React.createClass({
-  propTypes: {
-  },
-  getOtion () {
+class ChartAPIComponent extends React.Component{
+  static propTypes = { // as static property
+    theme: React.PropTypes.string,
+  };
+
+  constructor(props) {
+    super(props)
+    this.state = { // define this.state in constructor
+      // option: this.getOption(),
+    }
+    this.clickBtn = this.clickBtn.bind(this)
+  }
+
+  getOption () {
     const option = {
       title: {
         text: '漏斗图',
@@ -95,18 +105,19 @@ const ChartAPIComponent = React.createClass({
     }
 
     return option
-  },
+  }
+
   clickBtn () {
     console.log(this)
     console.log(this.echarts_react)
     // window.open(this.echarts_react.getEchartsInstance().getDataURL(), '_blank')
-  },
+  }
   render () {
     return (
       <div className="examples">
         <div className="parent">
           <ReactEcharts ref={(e) => { this.echarts_react = e }}
-            option={this.getOtion()}
+            option={this.getOption()}
             style={{ height: '500px', width: '100%' }}
             className="react_for_echarts"
             theme={this.props.theme}
@@ -114,7 +125,7 @@ const ChartAPIComponent = React.createClass({
         </div>
       </div>
     )
-  },
-})
+  }
+}
 
 export default ChartAPIComponent

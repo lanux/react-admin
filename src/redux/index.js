@@ -4,20 +4,19 @@ import thunkMiddleware from 'redux-thunk'
 import { browserHistory } from 'react-router'
 import { createLogger } from 'redux-logger'
 import { routerMiddleware, routerReducer, syncHistoryWithStore } from 'react-router-redux'
-import initState from './models'
-import reducersHolder from './reducers'
-import domains from './domain'
-import { message } from 'antd'
 // 引入createEpicMiddleware
 import { createEpicMiddleware } from 'redux-observable'
-
-// 引入合并后的epic函数
-import rootEpic from './epics'
-import { createReducer } from '../utils/index'
+import { ajax } from 'rxjs/observable/dom/ajax'
+import {
+  subscriptionHolder,
+  reducersHolder,
+  initState,
+  epics,
+} from './domain'
+// import { message } from 'antd'
 
 // createEpicMiddleware会将epic函数转为redux中间件
-const epicMiddleware = createEpicMiddleware(rootEpic)
-
+const epicMiddleware = createEpicMiddleware(epics, { dependencies: { ajax } })
 
 /*
  see http://www.8dou5che.com/2017/01/22/react-router-redux/
@@ -53,16 +52,6 @@ const createStoreWithMiddleware = applyMiddleware(
   loggerMiddleware,
   routerReduxMiddleware,
 )(createStore)
-
-const subscriptionHolder = []
-for (const key in domains) {
-  if (Object.prototype.hasOwnProperty.call(domains, key)) {
-    const { state, reducers, actions, subscriptions } = domains[key]
-    reducers && (reducersHolder[key] = createReducer(state || {}, reducers))
-    initState[key] = state || {}
-    subscriptions && subscriptionHolder.push({ subscriptions, actions })
-  }
-}
 
 const rootReducer = combineReducers({
   ...reducersHolder,

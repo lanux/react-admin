@@ -3,11 +3,19 @@ import ReactEcharts from 'echarts-for-react'
 
 import echarts from 'echarts'
 
-const ThemeChartComponent = React.createClass({
-  propTypes: {
-    theme: PropTypes.string,
-  },
-  getOtion () {
+class ThemeChartComponent extends React.Component {
+  static propTypes = { // as static property
+    theme: React.PropTypes.string,
+  }
+
+  constructor (props) {
+    super(props)
+    this.state = { // define this.state in constructor
+      option: this.getOption(),
+    }
+  }
+
+  getOption () {
     const option = {
       title: {
         text: '阶梯瀑布图',
@@ -80,19 +88,21 @@ const ThemeChartComponent = React.createClass({
       ],
     }
     return option
-  },
+  }
+
   registerTheme () {
     echarts.registerTheme('my_theme', {
       backgroundColor: '#0f3425',
     })
-  },
+  }
+
   render () {
     this.registerTheme()
     return (
       <div className="examples">
         <div className="parent">
           <ReactEcharts
-            option={this.getOtion()}
+            option={this.getOption()}
             // theme="my_theme"
             style={{ height: '500px', width: '100%' }}
             className="react_for_echarts"
@@ -101,7 +111,7 @@ const ThemeChartComponent = React.createClass({
         </div>
       </div>
     )
-  },
-})
+  }
+}
 
 export default ThemeChartComponent

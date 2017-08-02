@@ -16,6 +16,7 @@ const requestPosts = () => {
 }
 
 export default {
+  types,
   state: {
     loading: false,
   },

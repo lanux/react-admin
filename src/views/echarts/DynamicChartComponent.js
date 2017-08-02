@@ -1,40 +1,32 @@
 import React from 'react'
 import ReactEcharts from 'echarts-for-react'
 
-const DynamicChartComponent = React.createClass({
-  propTypes: {
-  },
-  timeTicket: null,
-  count: 51,
-  getInitialState () {
-    return { option: this.getOption() }
-  },
-  fetchNewDate () {
-    let axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '')
-    let option = this.state.option
-    let data0 = option.series[0].data
-    let data1 = option.series[1].data
-    data0.shift()
-    data0.push(Math.round(Math.random() * 1000))
-    data1.shift()
-    data1.push((Math.random() * 10 + 5).toFixed(1) - 0)
-    option.xAxis[0].data.shift()
-    option.xAxis[0].data.push(axisData)
-    option.xAxis[1].data.shift()
-    option.xAxis[1].data.push(this.count++)
-    this.setState({ option })
-  },
+class DynamicChartComponent extends React.Component {
+
+  static propTypes = { // as static property
+    theme: React.PropTypes.string,
+  };
+
+  constructor(props) {
+    super(props)
+    this.state = { // define this.state in constructor
+      option: this.getOption(),
+    }
+    this.fetchNewDate = this.fetchNewDate.bind(this)
+  }
+
   componentDidMount () {
     if (this.timeTicket) {
       clearInterval(this.timeTicket)
     }
     this.timeTicket = setInterval(this.fetchNewDate, 1000)
-  },
+  }
   componentWillUnmount () {
     if (this.timeTicket) {
       clearInterval(this.timeTicket)
     }
-  },
+  }
+
   getOption () {
     const option = {
       title: {
@@ -155,7 +147,25 @@ const DynamicChartComponent = React.createClass({
     }
 
     return option
-  },
+  }
+  timeTicket = null
+  count = 51
+  fetchNewDate () {
+    let axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '')
+    let option = this.state.option
+    let data0 = option.series[0].data
+    let data1 = option.series[1].data
+    data0.shift()
+    data0.push(Math.round(Math.random() * 1000))
+    data1.shift()
+    data1.push((Math.random() * 10 + 5).toFixed(1) - 0)
+    option.xAxis[0].data.shift()
+    option.xAxis[0].data.push(axisData)
+    option.xAxis[1].data.shift()
+    option.xAxis[1].data.push(this.count++)
+    this.setState({ option })
+  }
+
   render () {
     return (
       <div className="examples">
@@ -169,7 +179,7 @@ const DynamicChartComponent = React.createClass({
         </div>
       </div>
     )
-  },
-})
+  }
+}
 
 export default DynamicChartComponent

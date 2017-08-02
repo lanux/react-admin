@@ -4,22 +4,7 @@ import { Provider } from 'react-redux'
 import 'babel-polyfill'
 import { store, history } from './redux'
 import Routers from './router'
-import appActions from './redux/actions/app'
-
-
-const resize = ({ dispatch }) => {
-  const siderFold = document.body.clientWidth < 992
-  const siderVisible = document.body.clientWidth > 768
-  dispatch(appActions.toggleSider({ payload: { siderFold, siderVisible } }))
-}
-
-document.body.clientWidth < 769 && resize(store)
-
-let tid
-window.onresize = () => {
-  clearTimeout(tid)
-  tid = setTimeout(resize(store), 300)
-}
+// import { actions } from './redux/domain/app'
 
 
 render((<Provider store={store}>

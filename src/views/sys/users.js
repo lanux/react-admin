@@ -16,8 +16,6 @@ const SysUserView = ({
 
   const { queryList } = others
 
-  // !initLoaded && queryList({ payload: {} })
-
   const handleSubmit = () => {
     let fields = getFieldsValue()
     fields.pageSize = pagination.pageSize
