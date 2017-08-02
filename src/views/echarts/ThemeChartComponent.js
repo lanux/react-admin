@@ -1,11 +1,12 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import ReactEcharts from 'echarts-for-react'
 
 import echarts from 'echarts'
 
 class ThemeChartComponent extends React.Component {
   static propTypes = { // as static property
-    theme: React.PropTypes.string,
+    theme: PropTypes.string,
   }
 
   constructor (props) {

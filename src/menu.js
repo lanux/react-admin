@@ -1,7 +1,7 @@
 
-export const useArrayMenu = true
+const useArrayMenu = true
 
-export const arrayMenu = [
+const arrayMenu = [
   { id: 1, icon: 'laptop', name: '仪表盘', router: '/home' },
   { id: 101, name: '系统管理', icon: 'line-chart', router: '/sys' },
   { id: 102, pid: 101, name: '用户管理', icon: 'mail', router: '/sys/user' },
@@ -20,7 +20,7 @@ export const arrayMenu = [
   { id: 302, pid: 301, name: '测试菜单', icon: 'hdd', router: '/test/index' },
 ]
 
-export const treeMenu = [{ id: 1, icon: 'laptop', name: '仪表盘', router: '/dashboard' }, {
+const treeMenu = [{ id: 1, icon: 'laptop', name: '仪表盘', router: '/dashboard' }, {
   id: 101,
   name: '测试菜单',
   icon: 'line-chart',
@@ -66,3 +66,9 @@ export const treeMenu = [{ id: 1, icon: 'laptop', name: '仪表盘', router: '/d
   icon: 'database',
   children: [{ id: 302, pid: 301, name: '测试菜单', icon: 'hdd', router: '/test/index' }],
 }]
+
+module.exports = {
+  arrayMenu,
+  useArrayMenu,
+  treeMenu,
+}

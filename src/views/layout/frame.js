@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Icon, Layout, Menu, Switch, Popover, Badge, Breadcrumb } from 'antd'
@@ -9,17 +10,17 @@ import pathToRegexp from 'path-to-regexp'
 import config from '../../utils/config'
 
 
+
 import styles from '../../css/app.less'
-import { arrayMenu, treeMenu, useArrayMenu } from '../../menu'
+// import { arrayMenu } from '../../menu'
 import { arrayToTree, queryArray } from '../../utils'
 
-import appAction from '../../redux/actions/app'
+import { actions as appAction } from '../../redux/domain/app'
 
 const { Header, Footer, Sider, Content } = Layout
 const { SubMenu } = Menu
 
 let lastHref
-const menuTree = useArrayMenu ? arrayToTree(arrayMenu) : treeMenu
 const getMenuItems = (_menuTree, _siderFold) => {
   return _menuTree.map((item) => {
     if (item.children) {
@@ -52,29 +53,19 @@ const getPathArray = (array, current, pid, id) => {
   return { defaultSelectedKeys, currentMenuArray }
 }
 
-function getCurrentMenuItem (location) {
-  let currentMenu
-  for (let item of arrayMenu) {
-    if (item.router && pathToRegexp(item.router).exec(location)) {
-      currentMenu = item
-      break
-    }
-  }
-  if (currentMenu) {
-    return getPathArray(arrayMenu, currentMenu, 'pid', 'id')
-  }
-  return {}
+function getCurrentMenuItem (location, arrayMenu) {
+  let currentMenu = arrayMenu.find(item => item.router && pathToRegexp(item.router).exec(location))
+  return currentMenu ? getPathArray(arrayMenu, currentMenu, 'pid', 'id') : {}
 }
 
-
 const App = ({ children, location, app, ...others }) => {
-  const { siderFold, theme, siderVisible, news, user } = app
-  const { changeTheme, toggleSider, loadUser, logout } = others
+  const { siderFold, theme, siderVisible, news, user, menus } = app
+  const { changeTheme, toggleSider, initLoad, logout } = others
 
   if (config.top_target_pages && config.top_target_pages.indexOf(location.pathname) > -1) {
     return <div>{children}</div>
   }
-  !user.username && loadUser()
+  !user.username && initLoad()
   // 路由切换显示进度条
   const href = window.location.href
   if (lastHref !== href) {
@@ -85,18 +76,19 @@ const App = ({ children, location, app, ...others }) => {
 
   const handleClickMenu = e => e.key === 'logout' && logout()
 
+  const menuTree = arrayToTree(menus)
 
   const menuContents = getMenuItems(menuTree, siderFold)
 
   // 寻找选中路由
 
-  const { defaultSelectedKeys, currentMenuArray } = getCurrentMenuItem(location.pathname)
+  const { defaultSelectedKeys, currentMenuArray } = getCurrentMenuItem(location.pathname, menus)
 
   // 寻找选中路由
   const menuProps = {
-    onClick: ({ keyPath }) => {
-      keyPath.map(id => arrayMenu.find(item => `${item.id}` === id))
-    },
+    // onClick: ({ keyPath }) => {
+    //   keyPath.map(id => arrayMenu.find(item => `${item.id}` === id))
+    // },
     theme,
     inlineIndent: 16,
     mode: 'inline',

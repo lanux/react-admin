@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button, Row, Form, Input, Icon, Col, Checkbox } from 'antd'
 import styles from './login.less'

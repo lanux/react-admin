@@ -1,10 +1,10 @@
 import { push } from 'react-router-redux'
 import { Observable } from 'rxjs/Rx'
-// import { ajax } from 'rxjs/observable/dom/ajax'
-import { keyMirror } from '../../utils/index'
-import * as services from '../../services/app'
-import { arrayMenu, treeMenu, useArrayMenu } from '../../menu'
 import { message } from 'antd'
+// import { ajax } from 'rxjs/observable/dom/ajax'
+import { keyMirror, arrayToTree } from '../../utils/index'
+import * as services from '../../services/app'
+import { arrayMenu } from '../../menu'
 
 
 // import { Record } from 'immutable'
@@ -33,6 +33,7 @@ export default {
   types,
   state: {
     menus: [],
+    menuTree: [],
     siderVisible: localStorage.getItem('app_sider_visible') !== '0',
     siderFold: localStorage.getItem('app_sider_fold') === '1',  // 是否折叠左边栏
     theme: localStorage.getItem('app_theme_name') || 'light', // 'light','dark'
@@ -108,7 +109,6 @@ export default {
       return { ...state, loading: !state.loading }
     },
     [types.LOAD_FINISHED]: (state, { payload }) => {
-      console.log(payload)
       return { ...state, ...payload }
     },
   },
@@ -120,6 +120,7 @@ export default {
           if (!user) return Observable.of(toLogin())
           return services.fetchMenus(user)
               .map(rsp => ({ payload: { user, menus: rsp.response } }))
+              .map(querySuccess)
               .catch((error) => {
                 message.error(`load menus thorw exception : ${error.message}`)
                 return Observable.of(

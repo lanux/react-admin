@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button, Col, message, Form, Row, Input, Table } from 'antd'
 import { actions as userActions } from '../../redux/domain/sysUser'

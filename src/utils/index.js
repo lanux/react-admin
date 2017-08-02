@@ -1,3 +1,4 @@
+
 export const createReducer = (initialState, handlerMap) => (state = initialState, action) => {
   const handler = (action && action.type) ? handlerMap[action.type] : undefined
   return handler ? handler(state, action) : state
@@ -16,6 +17,11 @@ export const keyMirror = (obj) => {
   return mirrored
 }
 
+export const deepClone = (obj) => {
+  let proto = Object.getPrototypeOf(obj)
+  return Object.assign({}, Object.create(proto), obj)
+}
+
 /**
  * 数组格式转树状结构
  * @param   {array}     array
@@ -25,7 +31,7 @@ export const keyMirror = (obj) => {
  * @return  {Array}
  */
 export const arrayToTree = (array, id = 'id', pid = 'pid', children = 'children') => {
-  let data = [...array]
+  let data = array.map(item => ({ ...item }))
   let result = []
   let hash = {}
   data.forEach((item, index) => {
