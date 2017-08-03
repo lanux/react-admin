@@ -32,8 +32,9 @@ const shuffle = function (input) {
 
 let database = usersListData.data
 
-module.exports = {
 
+module.exports = {
+  userList: shuffle(database),
   'GET /users': function (req, res) {
     const { query } = req
     let { pageSize, page } = query

@@ -2,6 +2,8 @@ import 'es6-promise'
 import fetch from 'isomorphic-fetch'
 import { keyMirror } from '../../utils/index'
 
+import { userList } from '../../mock/user'
+
 const types = keyMirror({
   LOAD: null,
   LOAD_FINISHED: null,
@@ -55,7 +57,10 @@ export default {
             console.log('status', response.status)
           }
         })
-        .catch(error => console.log(error))
+        .catch((error) => {
+          console.log(error)
+          return dispatch(receivePosts({ payload: { list: userList } }))
+        })
     },
   },
   reducers: {
