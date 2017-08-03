@@ -10,7 +10,6 @@ import pathToRegexp from 'path-to-regexp'
 import config from '../../utils/config'
 
 
-
 import styles from '../../css/app.less'
 // import { arrayMenu } from '../../menu'
 import { arrayToTree, queryArray } from '../../utils'
@@ -119,7 +118,7 @@ const App = ({ children, location, app, ...others }) => {
       {siderVisible ? <Sider className={classnames(styles.layoutsider)} collapsible width={224} trigger={null} collapsedWidth={48} collapsed={siderFold}>
         <div className={styles.logo}>
           <Icon type="github" className={styles.logoicon} />
-          {!siderFold ? <span className={styles.logotitle}>react-admin</span> : ''}
+          {!siderFold ? <span className={styles.logotitle}>{config.project_name}</span> : ''}
         </div>
         {siderFold ? <Menu {...menuProps} mode={'vertical'}>{menuContents}</Menu> :
         <ReactScrollbar speed={0.8} smoothScrolling horizontal={false} className={styles.scrollbar} contentClassName={styles.scrollbarcontent}>
@@ -188,7 +187,7 @@ const App = ({ children, location, app, ...others }) => {
           </div>
           <Content className={styles.layoutcontent}>{children}</Content>
           <Footer style={{ textAlign: 'center', paddingBottom: 12 }}>
-            react-admin ©2017 Created by Lanux
+            {config.project_name} ©2017 Created by Lanux
           </Footer>
         </ReactScrollbar>
       </Layout>
